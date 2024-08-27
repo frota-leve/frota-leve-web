@@ -1,5 +1,9 @@
-import Login from '../components/Login';
+import Login from "@/components/Login";
 
 export default function Page() {
-  return <Login />;
+  return(
+    <main className="bg-green-500 w-full">
+      <Login />
+    </main>
+  ) 
 }
