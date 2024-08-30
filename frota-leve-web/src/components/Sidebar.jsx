@@ -2,13 +2,13 @@ import React from 'react'
 import {FaHome,FaCog, FaPoll, FaCar,} from 'react-icons/fa'
 import { FaPeopleGroup } from 'react-icons/fa6'
 
-const Sidebar = () => {
+  const Sidebar = ({sidebarToggle}) => {
   return (
     <div className='w-64 bg-white fixed h-full px-6 py-3 text-black'>
       <div className='my-2 mb-4'> 
         <h1 className='text-2x text-black font-bold'> Admin Dashboard</h1>
       </div>
-      <hr />
+      <hr className='border-t-2 border-black'/>
       <ul className='mt-3 text-black font-bold'>
         <li className='mb-2 rounded hover:shandow hover:bg-[#FFC314] py-2'> 
           <a href="" className='px-3'>

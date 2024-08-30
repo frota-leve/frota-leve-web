@@ -1,8 +1,14 @@
 import React from 'react'
+import Navbar from './Navbar'
+import Sidebar from './Sidebar'
 
-const Dashboard = () => {
+const Dashboard = ({sidenbarToggle,setSidebarToggle}) => {
   return (
-    <div>Dashboard</div>
+    <div className='w-full'>
+        <Navbar/>
+        <Sidebar/>
+
+    </div>
   )
 }
 

@@ -16,5 +16,10 @@ const config: Config = {
     },
   },
   plugins: [],
+  variants:{
+    extend:{
+      display: ["focus-group"]
+    }
+  }
 };
 export default config;
