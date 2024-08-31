@@ -9,8 +9,9 @@ const Milena = () => {
     <div className='w-full h-full'>
       
     {/* <Login/> */}
-     <Navbar/> 
+     {/* <Navbar/>  */}
     <Sidebar/>
+    <Dashboard/>
 
     
 

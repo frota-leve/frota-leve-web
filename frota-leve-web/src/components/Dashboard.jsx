@@ -5,8 +5,8 @@ import Sidebar from './Sidebar'
 const Dashboard = ({sidenbarToggle,setSidebarToggle}) => {
   return (
     <div className='w-full'>
-        <Navbar/>
-        <Sidebar/>
+    <Navbar/>
+        
 
     </div>
   )

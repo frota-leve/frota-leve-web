@@ -21,8 +21,8 @@ const Navbar = () => {
         <div className='relative'>
           <button className='text-black group'>
             <FaUserCircle className='w-6 h-6 mt-1'/>
-            <div className='z-10 hidden absolute  bg-red-600 rounded-lg shadow w-32 group-focus:block top-full'>
-              <ul> 
+            <div className='z-10 hidden absolute  bg-[#FFC314] rounded-lg shadow w-32 group-focus:block top-full right-0'>
+              <ul className='py-2 text-sm text-gray'>  
                 <li> <a href="">profile</a></li>
                 <li> <a href="">Setting</a></li>
                 <li> <a href="">Log out</a></li>
