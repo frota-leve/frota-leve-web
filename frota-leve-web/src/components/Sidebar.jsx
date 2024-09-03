@@ -2,9 +2,9 @@ import React from 'react'
 import {FaHome,FaCog, FaPoll, FaCar,} from 'react-icons/fa'
 import { FaPeopleGroup } from 'react-icons/fa6'
 
-  const Sidebar = ({sidebarToggle}) => {
+  const Sidebar = () => {
   return (
-    <div className='w-64 bg-white fixed h-full px-6 py-3 text-black'>
+    <div className='w-64 bg-gray-200 fixed h-full px-6 py-3 text-black'>
       <div className='my-2 mb-4'> 
         <h1 className='text-2x text-black font-bold'> Admin Dashboard</h1>
       </div>
