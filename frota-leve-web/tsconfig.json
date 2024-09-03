@@ -27,6 +27,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/milena/page.tsx"
-  ],
+, "src/components/Formulario.tsx"  ],
   "exclude": ["node_modules"]
 }

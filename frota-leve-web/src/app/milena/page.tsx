@@ -1,3 +1,5 @@
+
+
 import React from 'react'
 import Sidebar from '@/components/Sidebar'
 import Formulario from '@/components/Formulario'
@@ -10,9 +12,9 @@ const Milena = () => {
       
     {/* <Login/> */}
     {/* <Navbar/>  */}
-    <Sidebar/>
-    {/* <Formulario/>  */}
-    <Dashboard/>
+    {/* <Sidebar/> */}
+    <Formulario/> 
+    {/* <Dashboard/> */}
     
 
     
