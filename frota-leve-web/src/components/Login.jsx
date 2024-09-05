@@ -6,7 +6,7 @@ const Login = () => {
     <div className=' w-full h-full flex' >
       <div className='w-[60%]   bg-[#FFC314]'></div>
 
-      <div className='w-[40%] bg-white flex items-center justify-center' >
+      <div className='w-[40%] bg-white flex zitems-center justify-center' >
         <div className='flex flex-col items-center'>
 
           {/* div da imagem */}
