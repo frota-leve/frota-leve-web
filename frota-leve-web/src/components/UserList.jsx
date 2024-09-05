@@ -1,40 +1,37 @@
 "use client";
 
 import React, { useState } from "react";
-import Formulario from "./Formulario"; // Importe o componente de formulário
+import Formulario from "./Formulario"; 
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 
 const UserList = () => {
-  // Lista de usuários inicial (pode ser vazia ou preenchida para testes)
   const [users, setUsers] = useState([
     { id: 1, name: "João Silva", email: "joao@example.com", document: "1234567890", role: "Motorista" },
     { id: 2, name: "Maria Souza", email: "maria@example.com", document: "0987654321", role: "Diretor" }
   ]);
 
-  // Estado para exibir/ocultar o formulário e armazenar o usuário sendo editado
   const [showForm, setShowForm] = useState(false);
-  const [editingUser, setEditingUser] = useState(null); // Armazena o usuário que está sendo editado
+  const [editingUser, setEditingUser] = useState(null); 
 
-  // Função para adicionar ou editar um usuário
+ 
   const handleSubmitUser = (userData) => {
     if (editingUser) {
-      // Atualizar o usuário existente
+
       setUsers(users.map((user) => (user.id === editingUser.id ? { ...userData, id: editingUser.id } : user)));
     } else {
-      // Adicionar um novo usuário
+   
       setUsers([...users, { id: Date.now(), ...userData }]);
     }
-    setShowForm(false); // Fecha o formulário após a ação
-    setEditingUser(null); // Limpa o estado de edição
+    setShowForm(false); 
+    setEditingUser(null); 
   };
 
-  // Função para iniciar a edição de um usuário
+
   const handleEditUser = (user) => {
     setEditingUser(user);
-    setShowForm(true); // Abre o formulário
+    setShowForm(true); 
   };
 
-  // Função para remover um usuário
   const handleDeleteUser = (id) => {
     setUsers(users.filter((user) => user.id !== id));
   };
@@ -45,7 +42,7 @@ const UserList = () => {
         <h2 className="text-2xl font-semibold">Usuários</h2>
         <button
           onClick={() => {
-            setEditingUser(null); // Limpa o estado de edição ao adicionar novo
+            setEditingUser(null); 
             setShowForm(true);
           }}
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -110,7 +107,6 @@ const UserList = () => {
               <CardTitle>{editingUser ? "Editar funcionário" : "Adicionar novo funcionário"}</CardTitle>
             </CardHeader>
             <CardContent>
-              {/* Passa a função de submissão de usuário para o formulário e os dados do usuário em edição */}
               <Formulario onSubmit={handleSubmitUser} defaultValues={editingUser} />
             </CardContent>
             <CardFooter>

@@ -14,9 +14,9 @@ const Milena = () => {
     {/* <Login/> */}
     {/* <Navbar/>  */}
     {/* <Sidebar/> */}
-    <Formulario/> 
+    {/* <Formulario/>  */}
     {/* <Dashboard/> */}
-    {/* <UserList/> */}
+    <UserList/>
     
 
     
