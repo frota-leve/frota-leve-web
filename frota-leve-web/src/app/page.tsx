@@ -1,10 +1,9 @@
-import ButtonDavi from "@/components/ButtonDavi";
-import Image from "next/image";
+import Home from "./home/page";
 
-export default function Home() {
+export default function App() {
   return (
     <main>
-      <h1 className="bg-red-500">hello</h1>
+      <Home />
     </main>
   );
 }
