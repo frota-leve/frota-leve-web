@@ -1,18 +1,17 @@
 import Link from "next/link"
-import React from 'react'
 import { FaCar, FaCog, FaHome, FaPoll, } from 'react-icons/fa'
 import { FaPeopleGroup } from 'react-icons/fa6'
 
 const Sidebar = () => {
   return (
-    <div className='w-64 bg-gray-200 fixed h-full px-6 py-3 text-black'>
+    <div className='w-64 bg-gray-200 h-full px-6 py-3 text-black fixed top-0 left-0'>
       <div className='my-2 mb-4'>
         <h1 className='text-2x text-black font-bold'> Admin Dashboard</h1>
       </div>
       <hr className='border-t-2 border-black' />
       <ul className='mt-3 text-black font-bold'>
         <li className='mb-2 rounded hover:shandow hover:bg-[#FFC314] py-2'>
-          <Link href='/home' className='psx-3 flex items-center'>
+          <Link href='/' className='psx-3 flex items-center'>
             <FaHome className='inline-block w6 h-6 mr-2 -mt-2'></FaHome>
             Home
           </Link>

@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import Formulario from "./Formulario"; 
+import { useState } from "react";
+import Formulario from "./Formulario";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 
 const UserList = () => {
@@ -11,25 +11,21 @@ const UserList = () => {
   ]);
 
   const [showForm, setShowForm] = useState(false);
-  const [editingUser, setEditingUser] = useState(null); 
+  const [editingUser, setEditingUser] = useState(null);
 
- 
   const handleSubmitUser = (userData) => {
     if (editingUser) {
-
       setUsers(users.map((user) => (user.id === editingUser.id ? { ...userData, id: editingUser.id } : user)));
     } else {
-   
       setUsers([...users, { id: Date.now(), ...userData }]);
     }
-    setShowForm(false); 
-    setEditingUser(null); 
+    setShowForm(false);
+    setEditingUser(null);
   };
-
 
   const handleEditUser = (user) => {
     setEditingUser(user);
-    setShowForm(true); 
+    setShowForm(true);
   };
 
   const handleDeleteUser = (id) => {
@@ -37,12 +33,12 @@ const UserList = () => {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <div className="p-6 flex-1 overflow-y-auto">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-semibold">Usuários</h2>
         <button
           onClick={() => {
-            setEditingUser(null); 
+            setEditingUser(null);
             setShowForm(true);
           }}
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"

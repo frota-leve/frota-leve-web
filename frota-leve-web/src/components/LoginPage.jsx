@@ -7,8 +7,7 @@ const LoginPage = () => {
   const router = useRouter();
 
   const handleLogin = () => {
-    // Redireciona para a página "/home"
-    router.push('/home');
+    router.push('/');
   };
 
   return (
