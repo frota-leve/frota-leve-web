@@ -27,6 +27,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/home/page.tsx"
-, "src/components/Formulario.tsx", "src/components/LoginPage.jsx"  ],
+, "src/components/Formulario.tsx", "src/components/Login.jsx"  ],
   "exclude": ["node_modules"]
 }
