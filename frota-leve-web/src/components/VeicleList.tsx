@@ -4,34 +4,50 @@ import { useState } from "react";
 import Formulario from "./Formulario";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 
-const VeicleList = () => {
-    const [car, setCar] = useState([
+// Interface para o tipo de dado do carro
+interface Car {
+    placa: string;
+    marca: string;
+    modelo: string;
+    document: string;
+    tipo: string;
+}
+
+// Interface para os props do formulário
+interface FormularioProps {
+    onSubmit: (carData: Car) => void;
+    defaultValues?: Car | null;
+}
+
+const VehicleList: React.FC = () => {
+    const [cars, setCars] = useState<Car[]>([
         { placa: "axy6o76", marca: "Gol", modelo: "Trend", document: "1234567890", tipo: "passeio" },
-        { placa: "axy6o76", marca: "Gol", modelo: "Trend", document: "1234567890", tipo: "passeio" },
-        { placa: "axy6o76", marca: "Gol", modelo: "Trend", document: "1234567890", tipo: "passeio" },
-        { placa: "axy6o76", marca: "Gol", modelo: "Trend", document: "1234567890", tipo: "passeio" }
+        { placa: "bxy6o77", marca: "Fiesta", modelo: "SE", document: "0987654321", tipo: "passeio" }
+        // Adicione mais veículos conforme necessário
     ]);
 
-    const [showForm, setShowForm] = useState(false);
-    const [editingCar, setEditingCar] = useState(null);
+    const [showForm, setShowForm] = useState<boolean>(false);
+    const [editingCar, setEditingCar] = useState<Car | null>(null);
 
-    const handleSubmitUser = (carData) => {
+    const handleSubmitCar = (carData: Car) => {
         if (editingCar) {
-            setCar(car.map((cars) => (car.placa === editingCar.placa ? { ...carData, id: editingCar.placa } : cars)));
+            // Atualiza o veículo existente
+            setCars(cars.map((c) => (c.placa === editingCar.placa ? { ...carData, placa: editingCar.placa } : c)));
         } else {
-            setCar([...car, { placa: Date.now(), ...carData }]);
+            // Adiciona um novo veículo
+            setCars([...cars, carData]);
         }
         setShowForm(false);
         setEditingCar(null);
     };
 
-    const handleEditCar = (car) => {
+    const handleEditCar = (car: Car) => {
         setEditingCar(car);
         setShowForm(true);
     };
 
-    const handleDeleteUser = (placa) => {
-        setCar(car.filter((car) => car.placa !== placa));
+    const handleDeleteCar = (placa: string) => {
+        setCars(cars.filter((car) => car.placa !== placa));
     };
 
     return (
@@ -71,7 +87,7 @@ const VeicleList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {car.map((car) => (
+                        {cars.map((car) => (
                             <tr key={car.placa} className="border-t">
                                 <td className="py-4 px-6 text-gray-800">{car.placa}</td>
                                 <td className="py-4 px-6 text-gray-800">{car.marca}</td>
@@ -85,7 +101,7 @@ const VeicleList = () => {
                                         Editar
                                     </button>
                                     <button
-                                        onClick={() => handleDeleteUser(car.placa)}
+                                        onClick={() => handleDeleteCar(car.placa)}
                                         className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                                     >
                                         Excluir
@@ -105,7 +121,7 @@ const VeicleList = () => {
                             <CardTitle>{editingCar ? "Editar Veículo" : "Adicionar novo Veículo"}</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <Formulario onSubmit={handleSubmitUser} defaultValues={editingCar} />
+                            <Formulario onSubmit={handleSubmitCar} defaultValues={editingCar} />
                         </CardContent>
                         <CardFooter>
                             <button
@@ -125,4 +141,4 @@ const VeicleList = () => {
     );
 };
 
-export default VeicleList;
+export default VehicleList;
