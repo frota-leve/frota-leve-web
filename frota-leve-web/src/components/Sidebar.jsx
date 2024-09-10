@@ -35,7 +35,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li className='mb-2 rounded hover:shandow hover:bg-[#FFC314] py-2'>
-          <Link href='/config' className='psx-3 flex items-center'>
+          <Link href='/configuracao' className='psx-3 flex items-center'>
             <FaCog className='inline-block w6 h-6 mr-2 -mt-2'></FaCog>
             Congifurações
           </Link>
