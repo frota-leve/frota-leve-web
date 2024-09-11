@@ -1,29 +1,15 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import Formulario from "./Formulario";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
+// Componente VehicleList
+import { useState } from 'react';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
+import Formulario, { Car } from './VeicleForm';
 
-// Interface para o tipo de dado do carro
-interface Car {
-    placa: string;
-    marca: string;
-    modelo: string;
-    document: string;
-    tipo: string;
-}
-
-// Interface para os props do formulário
-interface FormularioProps {
-    onSubmit: (carData: Car) => void;
-    defaultValues?: Car | null;
-}
 
 const VehicleList: React.FC = () => {
     const [cars, setCars] = useState<Car[]>([
-        { placa: "axy6o76", marca: "Gol", modelo: "Trend", document: "1234567890", tipo: "passeio" },
-        { placa: "bxy6o77", marca: "Fiesta", modelo: "SE", document: "0987654321", tipo: "passeio" }
-        // Adicione mais veículos conforme necessário
+        { placa: "axy6o76", marca: "Gol", modelo: "Trend", document: "1234567890" },
+        { placa: "bxy6o77", marca: "Fiesta", modelo: "SE", document: "0987654321" }
     ]);
 
     const [showForm, setShowForm] = useState<boolean>(false);
@@ -31,10 +17,8 @@ const VehicleList: React.FC = () => {
 
     const handleSubmitCar = (carData: Car) => {
         if (editingCar) {
-            // Atualiza o veículo existente
-            setCars(cars.map((c) => (c.placa === editingCar.placa ? { ...carData, placa: editingCar.placa } : c)));
+            setCars(cars.map(c => c.placa === editingCar.placa ? { ...carData, placa: editingCar.placa } : c));
         } else {
-            // Adiciona um novo veículo
             setCars([...cars, carData]);
         }
         setShowForm(false);
@@ -47,7 +31,7 @@ const VehicleList: React.FC = () => {
     };
 
     const handleDeleteCar = (placa: string) => {
-        setCars(cars.filter((car) => car.placa !== placa));
+        setCars(cars.filter(car => car.placa !== placa));
     };
 
     return (
@@ -87,7 +71,7 @@ const VehicleList: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {cars.map((car) => (
+                        {cars.map(car => (
                             <tr key={car.placa} className="border-t">
                                 <td className="py-4 px-6 text-gray-800">{car.placa}</td>
                                 <td className="py-4 px-6 text-gray-800">{car.marca}</td>
@@ -121,7 +105,7 @@ const VehicleList: React.FC = () => {
                             <CardTitle>{editingCar ? "Editar Veículo" : "Adicionar novo Veículo"}</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <Formulario onSubmit={handleSubmitCar} defaultValues={editingCar} />
+                        <Formulario onSubmit={handleSubmitCar} defaultValues={editingCar } />
                         </CardContent>
                         <CardFooter>
                             <button
