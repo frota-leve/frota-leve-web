@@ -4,16 +4,24 @@ import { useState } from "react";
 import Formulario from "./Formulario";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  document: string;
+  role: string;
+}
+
 const UserList = () => {
-  const [users, setUsers] = useState([
+  const [users, setUsers] = useState<User[]>([
     { id: 1, name: "João Silva", email: "joao@example.com", document: "1234567890", role: "Motorista" },
     { id: 2, name: "Maria Souza", email: "maria@example.com", document: "0987654321", role: "Diretor" }
   ]);
 
   const [showForm, setShowForm] = useState(false);
-  const [editingUser, setEditingUser] = useState(null);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
 
-  const handleSubmitUser = (userData) => {
+  const handleSubmitUser = (userData: Omit<User, 'id'>) => {
     if (editingUser) {
       setUsers(users.map((user) => (user.id === editingUser.id ? { ...userData, id: editingUser.id } : user)));
     } else {
@@ -23,12 +31,12 @@ const UserList = () => {
     setEditingUser(null);
   };
 
-  const handleEditUser = (user) => {
+  const handleEditUser = (user: User) => {
     setEditingUser(user);
     setShowForm(true);
   };
 
-  const handleDeleteUser = (id) => {
+  const handleDeleteUser = (id: number) => {
     setUsers(users.filter((user) => user.id !== id));
   };
 
@@ -103,7 +111,7 @@ const UserList = () => {
               <CardTitle>{editingUser ? "Editar funcionário" : "Adicionar novo funcionário"}</CardTitle>
             </CardHeader>
             <CardContent>
-              <Formulario onSubmit={handleSubmitUser} defaultValues={editingUser} />
+              <Formulario onSubmit={handleSubmitUser} setState={setShowForm} />
             </CardContent>
             <CardFooter>
               <button
