@@ -100,7 +100,7 @@ const VehicleList: React.FC = () => {
             {/* Modal do Formulário */}
             {showForm && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                    <Card className="w-full max-w-md">
+                    <Card className="w-800 h-600">
                         <CardHeader className="bg-[#FFC314]">
                             <CardTitle>{editingCar ? "Editar Veículo" : "Adicionar novo Veículo"}</CardTitle>
                         </CardHeader>
