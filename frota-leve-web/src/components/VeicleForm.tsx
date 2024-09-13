@@ -17,7 +17,7 @@ export interface Car {
 
 // Definição do esquema de validação
 const veicleForm = z.object({
-    Placa: z.string().max(50, { message: "Placa inválida!" }),
+    placa: z.string().max(50, { message: "Placa inválida!" }),
     marca: z.string().max(50, { message: "Marca inválida!" }),
     document: z.string().max(11, { message: "Documento inválido!" }),
     modelo: z.string().max(50, { message: "Modelo muito longo!" }),
@@ -38,7 +38,7 @@ const Formulario = ({ onSubmit, defaultValues }: { onSubmit: (data: FormValues) 
             <Card className=''>
             <form onSubmit={methods.handleSubmit(onSubmit)} >
                 <div className='border-2 p-3 m-2 rounded'>
-                <FormField name="Placa" />
+                <FormField name="placa" />
                 </div>
                 <div className='p-3'>
                 <FormField name="marca" />
@@ -61,7 +61,7 @@ const FormField = ({ name }: { name: keyof FormValues }) => {
 
     return (
         <div >
-            <text>{name}</text>
+            <label htmlFor={name}>{name}</label>
             <input {...register(name)} className='p-2 ml-10 w-1/2 border-2 rounded'/>
             {error && <p>{"erro"}</p>}
         </div>
