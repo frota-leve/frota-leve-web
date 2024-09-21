@@ -2,13 +2,39 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const LoginPage = () => {
   const router = useRouter();
 
-  const handleLogin = () => {
-    router.push('/');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleLogin = async () => {
+    const response = await fetch (`/api/user/${email}`) 
+    const responseJson = await response.json();
+    console.log(responseJson)
+    setShowPassword(true)
+    
   };
+
+  const savedLogin = async () =>{
+    const response = await fetch ('/api/auth',
+      {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify( {
+          email,
+          password: senha
+        })
+      }
+    )
+    const responseJson = await response.json();
+    console.log(responseJson)
+    router.push('/')
+
+  }
 
   return (
     <div className='w-full h-full flex'>
@@ -23,19 +49,37 @@ const LoginPage = () => {
 
           <div className='w-full flex flex-col'>
             <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               type="email"
               placeholder="Email"
               className='w-full text-black py-4 my-4 bg-transparent border-b border-black outline-none focus:outline-none'
             />
 
-            <input
+            {/* {
+              <input
+               
+                type="password"
+                placeholder="Senha"
+                className='w-full text-black py-4 my-4 bg-transparent border-b border-black outline-none focus:outline-none'
+              /> 
+            } */}
+            {
+              showPassword ?    
+              <input
+               value={senha}
+               onChange={(s) => setSenha(s.target.value)}
               type="password"
               placeholder="Senha"
               className='w-full text-black py-4 my-4 bg-transparent border-b border-black outline-none focus:outline-none'
-            />
+            /> : ' '
+
+            }
+
+            
           </div>
 
-          <div className='w-full flex items-center justify-between'>
+          {/* <div className='w-full flex items-center justify-between'>
             <div className='w-full flex items-center text-[#060606]'>
               <input type="checkbox" className='w-4 h-4 mr-2' />
               <p className='text-sm'>Remember me</p>
@@ -43,15 +87,28 @@ const LoginPage = () => {
             <p className='text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2 text-black'>
               Esqueceu a senha?
             </p>
-          </div>
+          </div> */}
 
           <div className='w-full flex flex-col my-4'>
-            <button
+
+
+            { 
+              showPassword ?
+              <button
               className='w-full text-black bg-[#FFC314] rounded-md p-4 text-center flex items-center justify-center'
-              onClick={handleLogin}
+              onClick={savedLogin}
             >
               Entrar
             </button>
+            : 
+            <button
+            className='w-full text-black bg-[#FFC314] rounded-md p-4 text-center flex items-center justify-center'
+            onClick={handleLogin}
+          >
+            Acessar
+          </button>
+            }
+
           </div>
         </div>
       </div>
