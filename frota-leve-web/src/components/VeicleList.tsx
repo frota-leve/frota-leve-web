@@ -94,28 +94,29 @@ const VehicleList: React.FC = () => {
 
             {/* Modal do Formulário */}
             {showForm && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                    <Card className="w-full max-w-md">
-                        <CardHeader className="bg-[#FFC314]">
-                            <CardTitle>{editingCar ? "Editar Veículo" : "Adicionar novo Veículo"}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <Formulario onSubmit={handleSubmitCar} defaultValues={editingCar} />
-                        </CardContent>
-                        <CardFooter>
-                            <button
-                                onClick={() => {
-                                    setShowForm(false);
-                                    setEditingCar(null);
-                                }}
-                                className="w-full bg-gray-500 text-white py-2 rounded hover:bg-gray-600"
-                            >
-                                Cancelar
-                            </button>
-                        </CardFooter>
-                    </Card>
-                </div>
-            )}
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <Card className="w-full max-w-md">
+            <CardHeader className="bg-[#FFC314]">
+                <CardTitle>{editingCar ? "Editar Veículo" : "Adicionar novo Veículo"}</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <Formulario onSubmit={handleSubmitCar} defaultValues={editingCar} />
+            </CardContent>
+            <CardFooter className="flex justify-between">
+                <button
+                    onClick={() => {
+                        setShowForm(false);
+                        setEditingCar(null);
+                    }}
+                    className="transition duration-200 w-full bg-gray-500 text-white py-2 rounded hover:bg-gray-60 mr-4 ml-4"
+                >
+                    Cancelar
+                </button>
+            </CardFooter>
+        </Card>
+    </div>
+)}
+
         </div>
     );
 };
