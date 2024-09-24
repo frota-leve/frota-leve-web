@@ -1,3 +1,6 @@
+"use client"
+
+import Dashboard from "@/components/Dashboard";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 
@@ -8,7 +11,7 @@ const Funcionarios = () => {
             <div className="flex-1 flex flex-col ml-64">
                 <Navbar />
                 <main className="flex-1 mt-4 p-6">
-
+               <Dashboard/>
                 </main>
             </div>
         </div>
