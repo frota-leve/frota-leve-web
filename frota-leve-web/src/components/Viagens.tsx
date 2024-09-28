@@ -17,7 +17,7 @@ type Trip = {
     licensePlate: string
     driverImage: string
     driverName: string
-    status: 'In Progress' | 'Completed' | 'Scheduled'
+    status: 'Em Andamento' | 'Finalizada' 
     startDate: string
     endDate: string
     startKm: number
@@ -39,7 +39,7 @@ const trips: Trip[] = [
         licensePlate: "ABC123",
         driverImage: "/placeholder.svg?height=40&width=40",
         driverName: "John Doe",
-        status: "In Progress",
+        status: "Em Andamento",
         startDate: "2023-06-23",
         endDate: "2023-06-30",
         startKm: 50000,
@@ -48,7 +48,7 @@ const trips: Trip[] = [
         driverDetails: {
             name: "John Doe",
             license: "DL12345678",
-            phone: "+1 234-567-8901"
+            phone: "+55 44 234-567-8901"
         }
     },
     {
@@ -57,7 +57,7 @@ const trips: Trip[] = [
         licensePlate: "XYZ789",
         driverImage: "/placeholder.svg?height=40&width=40",
         driverName: "Jane Smith",
-        status: "Completed",
+        status: "Finalizada",
         startDate: "2023-06-20",
         endDate: "2023-06-22",
         startKm: 30000,
@@ -68,7 +68,7 @@ const trips: Trip[] = [
         driverDetails: {
             name: "Jane Smith",
             license: "DL87654321",
-            phone: "+1 987-654-3210"
+            phone: "+55 44 987-654-3210"
         }
     },
     {
@@ -77,7 +77,7 @@ const trips: Trip[] = [
         licensePlate: "DEF456",
         driverImage: "/placeholder.svg?height=40&width=40",
         driverName: "Bob Johnson",
-        status: "Scheduled",
+        status: "Finalizada",
         startDate: "2023-07-01",
         endDate: "2023-07-05",
         startKm: 20000,
@@ -86,7 +86,7 @@ const trips: Trip[] = [
         driverDetails: {
             name: "Bob Johnson",
             license: "DL11223344",
-            phone: "+1 555-123-4567"
+            phone: "+55 44 555-123-4567"
         }
     },
 ]
@@ -99,10 +99,9 @@ export function Viagens() {
             <Tabs defaultValue="all">
                 <div className="flex items-center justify-between">
                     <TabsList>
-                        <TabsTrigger value="all">All Trips</TabsTrigger>
-                        <TabsTrigger value="inProgress">In Progress</TabsTrigger>
-                        <TabsTrigger value="completed">Completed</TabsTrigger>
-                        <TabsTrigger value="scheduled">Scheduled</TabsTrigger>
+                        <TabsTrigger value="all">Todas Viagens</TabsTrigger>
+                        <TabsTrigger value="inProgress">Em Andamento</TabsTrigger>
+                        <TabsTrigger value="completed">Finalizadas</TabsTrigger>
                     </TabsList>
                     <div className="flex items-center gap-2">
                         <DropdownMenu>
@@ -113,20 +112,17 @@ export function Viagens() {
                                     className="h-8 gap-1 text-xs"
                                 >
                                     <ListFilter className="h-3 w-3" />
-                                    <span className="sr-only sm:not-sr-only">Filter</span>
+                                    <span className="sr-only sm:not-sr-only">Filtros</span>
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                                <DropdownMenuLabel>Filtre por</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuCheckboxItem checked>
-                                    In Progress
+                                    Em andamento
                                 </DropdownMenuCheckboxItem>
                                 <DropdownMenuCheckboxItem>
-                                    Completed
-                                </DropdownMenuCheckboxItem>
-                                <DropdownMenuCheckboxItem>
-                                    Scheduled
+                                    Finalizadas
                                 </DropdownMenuCheckboxItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
@@ -136,27 +132,27 @@ export function Viagens() {
                             className="h-8 gap-1 text-xs"
                         >
                             <File className="h-3 w-3" />
-                            <span className="sr-only sm:not-sr-only">Export</span>
+                            <span className="sr-only sm:not-sr-only">Exportar</span>
                         </Button>
                     </div>
                 </div>
                 <TabsContent value="all">
                     <Card>
                         <CardHeader>
-                            <CardTitle>All Trips</CardTitle>
+                            <CardTitle>Todas Viagens</CardTitle>
                             <CardDescription>
-                                A list of all trips including in progress, completed, and scheduled.
+                                Uma lista de todas as viagens.
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
                             <Table>
                                 <TableHeader>
                                     <TableRow>
-                                        <TableHead>Vehicle</TableHead>
-                                        <TableHead>Driver</TableHead>
+                                        <TableHead>Veiculo</TableHead>
+                                        <TableHead>Condutor</TableHead>
                                         <TableHead>Status</TableHead>
-                                        <TableHead>Start Date</TableHead>
-                                        <TableHead>End Date</TableHead>
+                                        <TableHead>Data Inicio</TableHead>
+                                        <TableHead>Data Fim</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -189,8 +185,8 @@ export function Viagens() {
                                             <TableCell>
                                                 <Badge
                                                     variant={
-                                                        trip.status === 'In Progress' ? 'default' :
-                                                            trip.status === 'Completed' ? 'secondary' :
+                                                        trip.status === 'Em Andamento' ? 'default' :
+                                                            trip.status === 'Finalizada' ? 'secondary' :
                                                                 'outline'
                                                     }
                                                 >

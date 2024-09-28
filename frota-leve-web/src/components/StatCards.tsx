@@ -9,8 +9,8 @@ export function StatCards() {
                 <CardHeader className="pb-3">
                     <CardTitle>Demonstrativo de Resultados</CardTitle>
                     <CardDescription className="max-w-lg text-balance leading-relaxed">
-                    Explore nossos dashboards interativos! 
-                    Clique aqui para ter acesso a dados e insights em tempo real.
+                        Explore nossos dashboards interativos!
+                        Clique aqui para ter acesso a dados e insights em tempo real.
                     </CardDescription>
                 </CardHeader>
                 <CardFooter>
