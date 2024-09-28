@@ -223,8 +223,8 @@ export function Viagens() {
                                 <div>
                                     <Badge
                                         variant={
-                                            selectedTrip.status === 'In Progress' ? 'default' :
-                                                selectedTrip.status === 'Completed' ? 'secondary' :
+                                            selectedTrip.status === 'Em Andamento' ? 'default' :
+                                                selectedTrip.status === 'Finalizada' ? 'secondary' :
                                                     'outline'
                                         }
                                     >
