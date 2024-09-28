@@ -7,24 +7,24 @@ export function StatCards() {
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
             <Card className="sm:col-span-2">
                 <CardHeader className="pb-3">
-                    <CardTitle>Your Orders</CardTitle>
+                    <CardTitle>Demonstrativo de Resultados</CardTitle>
                     <CardDescription className="max-w-lg text-balance leading-relaxed">
-                        Introducing Our Dynamic Orders Dashboard for Seamless
-                        Management and Insightful Analysis.
+                    Explore nossos dashboards interativos! 
+                    Clique aqui para ter acesso a dados e insights em tempo real.
                     </CardDescription>
                 </CardHeader>
                 <CardFooter>
-                    <Button>Create New Order</Button>
+                    <Button>Clique aqui</Button>
                 </CardFooter>
             </Card>
             <Card>
                 <CardHeader className="pb-2">
-                    <CardDescription>This Week</CardDescription>
-                    <CardTitle className="text-4xl">$1,329</CardTitle>
+                    <CardDescription>Viagens este Mês</CardDescription>
+                    <CardTitle className="text-4xl">1,329</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="text-xs text-muted-foreground">
-                        +25% from last week
+                        +25% que último mês
                     </div>
                 </CardContent>
                 <CardFooter>
@@ -33,12 +33,12 @@ export function StatCards() {
             </Card>
             <Card>
                 <CardHeader className="pb-2">
-                    <CardDescription>This Month</CardDescription>
-                    <CardTitle className="text-4xl">$5,329</CardTitle>
+                    <CardDescription>KM Rodados este Mês</CardDescription>
+                    <CardTitle className="text-4xl">95.329</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="text-xs text-muted-foreground">
-                        +10% from last month
+                        +10% que último mês
                     </div>
                 </CardContent>
                 <CardFooter>
