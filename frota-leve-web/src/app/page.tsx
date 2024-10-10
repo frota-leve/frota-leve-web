@@ -5,7 +5,6 @@ import Navbar from "@/components/Navbar";
 export default function App() {
   return (
     <main>
-
       <div className="flex">
         <Sidebar />
         <div className="flex-1 flex flex-col ml-64">

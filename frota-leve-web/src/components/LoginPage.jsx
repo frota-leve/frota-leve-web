@@ -3,12 +3,10 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 const LoginPage = () => {
   const router = useRouter();
-
-
-
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
