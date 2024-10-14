@@ -5,19 +5,41 @@ type SignInRequestType = {
   password: string;
 }
 
+type LoginResponseType = {
+  token: string;
+  tokenExpirationAt: string;
+  refreshToken: string;
+  refreshTokenExpirationAt: string;
+  email: string;
+  name: string;
+  businessId: string;
+  businessName: string;
+}
+
 export async function signInRequest(data: SignInRequestType) {
   const response = await axios.post('/api/auth', data);
 
+  const {
+    token,
+    tokenExpirationAt,
+    refreshToken,
+    refreshTokenExpirationAt,
+    email,
+    name,
+    businessId,
+    businessName,
+  }: LoginResponseType = response.data;
+
   return {
-    token: response.data.token,
-    tokenExpirationAt: response.data.tokenExpirationAt,
-    refreshToken: response.data.refreshToken,
-    refreshTokenExpirationAt: response.data.refreshTokenExpirationAt,
+    token,
+    tokenExpirationAt,
+    refreshToken,
+    refreshTokenExpirationAt,
     user: {
-      email: response.data.email,
-      name: response.data.name,
-      businessId: response.data.businessId,
-      businessName: response.data.businessName,
+      email,
+      name,
+      businessId,
+      businessName,
     }
   }
 }
