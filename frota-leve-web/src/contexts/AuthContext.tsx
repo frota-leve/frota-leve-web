@@ -1,12 +1,11 @@
 'use client'
 
 import { signInRequest } from "@/services/auth";
-import { createContext } from "vm";
-import { setCookie } from 'nookies';
-import { useState } from "react";
-import Router from "next/router";
+import { createContext, useEffect, useState } from "react";
+import { parseCookies, setCookie } from 'nookies';
+import { useRouter } from "next/navigation";
 
-const AuthContext = createContext({} as AuthContextType)
+export const AuthContext = createContext({} as AuthContextType)
 
 export type AuthContextType = {
   isAuthenticated: boolean;
@@ -27,9 +26,21 @@ type User = {
 }
 
 export function AuthProvider({ children }: any) {
+  const router = useRouter()
+
   const [ user, setUser ] = useState<User | null>(null)
 
   const isAuthenticated = !!user;
+
+  useEffect(() => {
+    const { 'token': token } = parseCookies()
+
+    if (token) {
+      router.push('/dashboard')
+    } else {
+      router.push('/login')
+    }
+  }, [])
 
   async function signIn({ email, password }: SignInData) {
     const { token, tokenExpirationAt, user } = await signInRequest({ email, password });
@@ -40,7 +51,7 @@ export function AuthProvider({ children }: any) {
 
     setUser(user)
 
-    Router.push('/dashboard')
+    router.push('/dashboard')
   }
 
   return (

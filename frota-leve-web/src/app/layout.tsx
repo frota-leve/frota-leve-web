@@ -19,11 +19,11 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <AuthProvider>
         <body className={`${inter.className} w-full h-screen`}>
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </body>
-      </AuthProvider>
     </html>
   );
 }
