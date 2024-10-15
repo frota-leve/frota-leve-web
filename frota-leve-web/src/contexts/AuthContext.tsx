@@ -1,10 +1,12 @@
+'use client'
+
 import { signInRequest } from "@/services/auth";
 import { createContext } from "vm";
 import { setCookie } from 'nookies';
 import { useState } from "react";
 import Router from "next/router";
 
-export const AuthContext = createContext({} as AuthContextType)
+const AuthContext = createContext({} as AuthContextType)
 
 export type AuthContextType = {
   isAuthenticated: boolean;
@@ -47,3 +49,5 @@ export function AuthProvider({ children }: any) {
     </AuthContext.Provider>
   )
 }
+
+export default AuthProvider
