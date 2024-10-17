@@ -1,12 +1,15 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { User } from './UserList';
+import api from '@/lib/axios-config';
+import { AuthContext } from '@/contexts/AuthContext';
+import { createEmployee } from '@/services/employee';
 
 const formSchema = z.object({
   email: z.string().email({
@@ -27,9 +30,6 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-const handleSubimitLogin = (data: FormValues)=>{
-  console.log(data)
-}
 const Formulario = ({onSubmit, setState}:{onSubmit: (User: User) => void, setState: Dispatch<SetStateAction<boolean>>}) => {
   const [isEditMode, setIsEditMode] = useState(false); 
   const form = useForm<FormValues>({
@@ -41,6 +41,17 @@ const Formulario = ({onSubmit, setState}:{onSubmit: (User: User) => void, setSta
       role: 'Motorista',
     },
   });
+  
+  const { user } = useContext(AuthContext);
+
+  const handleSubimitLogin = async (data: FormValues) => {
+    await createEmployee(user.businessId, {
+      email: data.email,
+      document: data.document,
+      name: data.name,
+    });
+  }
+
 
   return (
     <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
@@ -138,3 +149,4 @@ const Formulario = ({onSubmit, setState}:{onSubmit: (User: User) => void, setSta
 };
 
 export default Formulario;
+
