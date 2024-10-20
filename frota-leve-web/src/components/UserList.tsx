@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Formulario from "./Formulario";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import { deleteEmployee } from "@/services/employee";
 
 export interface User {
   id: number;
@@ -36,9 +37,23 @@ const UserList = () => {
     setShowForm(true);
   };
 
-  const handleDeleteUser = (id: number) => {
-    setUsers(users.filter((user) => user.id !== id));
+  // o jeito q tava
+  // const handleDeleteUser = (id: number) => {
+  //   setUsers(users.filter((user) => user.id !== id));
+  // };
+
+  const handleDeleteUser = async (id: number) => {
+    const businessId = "id_do_negocio"; 
+  
+    try {
+      await deleteEmployee(businessId, id); 
+      setUsers(users.filter((user) => user.id !== id)); 
+      console.log('Usuário excluído com sucesso!');
+    } catch (error) {
+      console.error('Erro ao excluir usuário:', error);
+    }
   };
+  
 
   return (
     <div className="p-6 flex-1 overflow-y-auto">
@@ -90,12 +105,24 @@ const UserList = () => {
                   >
                     Editar
                   </button>
-                  <button
+                  {/* <button
                     onClick={() => handleDeleteUser(user.id)}
                     className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                   >
                     Excluir
-                  </button>
+                  </button> */}
+                  <button
+                      onClick={async () => {
+                        await handleDeleteUser(user.id); 
+                        setShowForm(false); 
+                        setEditingUser(null);
+                      }}
+                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                    >
+                      Excluir
+                    </button>
+
+
                 </td>
               </tr>
             ))}
@@ -116,6 +143,7 @@ const UserList = () => {
             <CardFooter>
               <button
                 onClick={() => {
+                  
                   setShowForm(false);
                   setEditingUser(null);
                 }}
