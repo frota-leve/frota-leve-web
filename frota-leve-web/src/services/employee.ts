@@ -1,3 +1,4 @@
+import { User } from "@/components/UserList";
 import api from "@/lib/axios-config";
 
 export type CreateEmployeeType = {
@@ -8,4 +9,9 @@ export type CreateEmployeeType = {
 
 export async function createEmployee(businessId: string, data: CreateEmployeeType): Promise<void> {
   return await api.post(`/api/business/${businessId}/employees`, data);
+}
+
+export async function getAll(): Promise<User[]> {
+  const { data } = await api.get('/api/employees');
+  return data.content
 }
