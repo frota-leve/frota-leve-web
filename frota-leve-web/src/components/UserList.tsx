@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Formulario from "./Formulario";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { deleteEmployee } from "@/services/employee";
+import { AuthContext } from '@/contexts/AuthContext';
 
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   document: string;
@@ -22,28 +23,24 @@ const UserList = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
 
-  const handleSubmitUser = (userData: Omit<User, 'id'>) => {
-    if (editingUser) {
-      setUsers(users.map((user) => (user.id === editingUser.id ? { ...userData, id: editingUser.id } : user)));
-    } else {
-      setUsers([...users, { id: Date.now(), ...userData }]);
-    }
-    setShowForm(false);
-    setEditingUser(null);
-  };
+  // const handleSubmitUser = (userData: Omit<User, 'id'>) => {
+  //   if (editingUser) {
+  //     setUsers(users.map((user) => (user.id === editingUser.id ? { ...userData, id: editingUser.id } : user)));
+  //   } else {
+  //     setUsers([...users, { id: Date.now(), ...userData }]);
+  //   }
+  //   setShowForm(false);
+  //   setEditingUser(null);
+  // };
 
   const handleEditUser = (user: User) => {
     setEditingUser(user);
     setShowForm(true);
   };
+  const { user } = useContext(AuthContext);
 
-  // o jeito q tava
-  // const handleDeleteUser = (id: number) => {
-  //   setUsers(users.filter((user) => user.id !== id));
-  // };
-
-  const handleDeleteUser = async (id: number) => {
-    const businessId = "id_do_negocio"; 
+  const handleDeleteUser = async (id: string) => {
+    const businessId = user.businessId; 
   
     try {
       await deleteEmployee(businessId, id); 
@@ -138,7 +135,7 @@ const UserList = () => {
               <CardTitle>{editingUser ? "Editar funcionário" : "Adicionar novo funcionário"}</CardTitle>
             </CardHeader>
             <CardContent>
-              <Formulario onSubmit={handleSubmitUser} setState={setShowForm} />
+              {/* <Formulario onSubmit={handleSubmitUser} setState={setShowForm} /> */}
             </CardContent>
             <CardFooter>
               <button
