@@ -1,6 +1,5 @@
 "use client";
 
-import UserList, { User } from "@/components/UserList";
 import { DataTable } from "./data-table";
 import { employeeColumns } from "./columns";
 import { getAll } from "@/services/employee";
@@ -8,12 +7,13 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { PlusCircleIcon } from "lucide-react";
 import { DialogForm } from "./dialog-form";
+import { Employee } from "@/types/types";
 
 const Employees = () => {
-  const [employees, setEmployees] = useState<User[]>([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);
   const [openFormModal, setOpenFormModal] = useState<boolean>(false);
 
-  const employeeEmpty: User = {
+  const employeeEmpty: Employee = {
     id: "",
     name: "",
     email: "",
