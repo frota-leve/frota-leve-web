@@ -34,7 +34,7 @@ export default function LoginPage() {
     router.push('/')
   }
 
-const handleForgotPassword = () => toast("Fale com seu Gestor!", { type: 'error' });
+const handleForgotPassword = () => toast("Fale com o suporte!", { type: 'error' });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FFC314] to-white flex items-center justify-center p-4">
