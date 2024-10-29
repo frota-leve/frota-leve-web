@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <div className='bg-[#FFC314] px-4 py-3 flex-1 justify-between w-full flex'>
       <div className='flex items-center text-x1'>
-        <FaBars className='text-black me-4 cursor-pointer'/>
+        {/* <FaBars className='text-black me-4 cursor-pointer'/> */}
         <span className='text-black font-semibold'>Frota Leve</span>
 
       </div>
