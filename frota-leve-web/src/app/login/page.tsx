@@ -1,88 +1,107 @@
-"use client";  // Adicione esta linha no início do arquivo
+"use client"
 
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useContext, useState } from 'react';
-import { AuthContext } from '@/contexts/AuthContext';
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useContext, useState } from 'react'
+import { AuthContext } from '@/contexts/AuthContext'
+import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const LoginPage = () => {
-  const router = useRouter();
-  const { signIn } = useContext(AuthContext);
+export default function LoginPage() {
+  const router = useRouter()
+  const { signIn } = useContext(AuthContext)
 
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('')
+  const [senha, setSenha] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
 
   async function handleSignIn() {
     await signIn({ email, password: senha })
   }
 
   const savedLogin = async () => {
-    const response = await fetch('/api/auth',
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          password: senha
-        })
-      }
-    )
-    const responseJson = await response.json();
+    const response = await fetch('/api/auth', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        password: senha
+      })
+    })
+    const responseJson = await response.json()
     console.log(responseJson.token)
     router.push('/')
   }
 
+const handleForgotPassword = () => toast("Fale com seu Gestor!", { type: 'error' });
+
   return (
-    <div className='w-full h-full flex'>
-      <div className='w-[60%] bg-[#FFC314]'></div>
-
-      <div className='w-[40%] bg-white flex items-center justify-center'>
-        <div className='flex flex-col items-center'>
-          {/* div da imagem */}
-          <div className='bg-red-500 flex justify-center'>
-            <Image src="/image/logoC_image.png" alt="frota leve" width={300} height={300} />
-          </div>
-
-          <div className='w-full flex flex-col'>
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              placeholder="Email"
-              className='w-full text-black py-4 my-4 bg-transparent border-b border-black outline-none focus:outline-none'
-            />
-            <input
-              value={senha}
-              onChange={(s) => setSenha(s.target.value)}
-              type="password"
-              placeholder="Senha"
-              className='w-full text-black py-4 my-4 bg-transparent border-b border-black outline-none focus:outline-none'
-            />
-          </div>
-
-          {/* <div className='w-full flex items-center justify-between'>
-            <div className='w-full flex items-center text-[#060606]'>
-              <input type="checkbox" className='w-4 h-4 mr-2' />
-              <p className='text-sm'>Remember me</p>
+    <div className="min-h-screen bg-gradient-to-br from-[#FFC314] to-white flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        <div className="bg-white rounded-lg shadow-2xl overflow-hidden transform transition-all hover:scale-105 duration-300 ease-in-out">
+          <div className="p-8">
+            <div className="mb-8 text-center">
+              <Image src="/image/logoAllSemfundo.png" alt="frota leve" width={200} height={200} className="mx-auto" />
             </div>
-            <p className='text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2 text-black'>
-              Esqueceu a senha?
-            </p>
-          </div> */}
-
-          <div className='w-full flex flex-col my-4'>
-            <button
-              className='w-full text-black bg-[#FFC314] rounded-md p-4 text-center flex items-center justify-center'
-              onClick={handleSignIn}
-            >
-              Entrar
-            </button>
+            <form onSubmit={(e) => { e.preventDefault(); handleSignIn(); }} className="space-y-6">
+              <div className="relative">
+                <Mail className="absolute top-3 left-3 text-gray-400" size={20} />
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                  placeholder="Email"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  required
+                />
+              </div>
+              <div className="relative">
+                <Lock className="absolute top-3 left-3 text-gray-400" size={20} />
+                <input
+                  value={senha}
+                  onChange={(s) => setSenha(s.target.value)}
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Senha"
+                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                >
+                  {showPassword ? (
+                    <EyeOff className="text-gray-400" size={20} />
+                  ) : (
+                    <Eye className="text-gray-400" size={20} />
+                  )}
+                </button>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  className="w-full bg-yellow-400 text-black rounded-md py-2 px-4 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:-translate-y-1"
+                >
+                  Entrar
+                </button>
+              </div>
+            </form>
           </div>
+          <div className="px-8 py-4 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
+            <label className="flex items-center">
+              <input type="checkbox" className="form-checkbox text-yellow-500" />
+              <span className="ml-2 text-sm text-gray-600">Lembrar-me</span>
+            </label>
+            <div>
+             <button className="text-sm hover:underline"  onClick={handleForgotPassword}>Esqueceu a senha?</button>
+
+            </div>
+          </div>
+      
         </div>
       </div>
+      <ToastContainer />
     </div>
-  );
-};
-
-export default LoginPage;
+  )
+}
