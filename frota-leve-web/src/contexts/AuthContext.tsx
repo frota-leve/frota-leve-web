@@ -49,7 +49,7 @@ export function AuthProvider({ children }: any) {
 
     setUser(user)
 
-    router.push('/dashboard')
+    router.push('/')
   }
 
   return (

@@ -37,9 +37,7 @@ const formSchema = z.object({
   name: z.string().max(50, {
     message: "Nome muito longo",
   }),
-  model: z.string().max(50, {
-    message: "Modelo invalido",
-  }),
+  mileage: z.coerce.number()
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -58,7 +56,7 @@ export function DialogForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: car.name,
-      model: car.model,
+      mileage: car.mileage,
       plate: car.plate,
       brand: car.brand,
     },
@@ -67,7 +65,7 @@ export function DialogForm({
   const onSubmit = async (data: FormValues) => {
     await createCar({
       name: data.name,
-      model: data.model,
+      mileage: data.mileage,
       plate: data.plate,
       brand: data.brand,
     });
@@ -95,20 +93,7 @@ export function DialogForm({
                     <FormItem>
                       <FormLabel>Nome</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite o nome..." {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="model"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Modelo</FormLabel>
-                      <FormControl>
-                        <Input placeholder="modelo do veiculo" {...field} />
+                        <Input placeholder="...(gol, astra, celta)" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -135,6 +120,20 @@ export function DialogForm({
                       <FormLabel>Marca</FormLabel>
                       <FormControl>
                         <Input placeholder="Marca do veiculo" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="mileage"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Km Atual</FormLabel>
+                      <FormControl>
+                        <Input type="number"
+                        placeholder="Km do veiculo" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

@@ -7,11 +7,10 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Car,
-  Cog,
   Home,
-  LayoutDashboard,
   Users,
 } from "lucide-react"
+
 
 export default function Component() {
   const pathname = usePathname()
@@ -30,10 +29,9 @@ export default function Component() {
         <div className="space-y-1">
           {[
             { name: 'Home', href: '/', icon: Home },
-            { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
             { name: 'Veículos', href: '/cars', icon: Car },
             { name: 'Funcionários', href: '/employees', icon: Users },
-            { name: 'Configurações', href: '/configuracao', icon: Cog },
+
           ].map((item) => {
             const isActive = pathname === item.href
             return (
@@ -66,9 +64,9 @@ export default function Component() {
           <div className="truncate">
             <p className="text-sm font-medium">Frota Leve</p>
             <p className="text-xs text-zinc-400">Administrador</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   )
 }

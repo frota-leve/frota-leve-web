@@ -9,7 +9,7 @@ export interface Employee {
 export interface Car {
   id: string;
   name: string;
-  model: string;
+  mileage: number;
   plate: string;
   brand: string;
 }
