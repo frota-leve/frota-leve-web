@@ -16,7 +16,7 @@ const Cars = () => {
   const carEmpty: Car = {
     id: "",
     name: "",
-    model: "",
+    mileage: 0,
     plate: "",
     brand: "",
   };
@@ -40,7 +40,7 @@ const Cars = () => {
       <div className="w-100 mb-2 flex justify-end">
         <Button onClick={() => setOpenFormModal(true)}>
           <PlusCircleIcon />
-          Novo Funcionário
+          Novo Veiculo
         </Button>
       </div>
       <div>
@@ -51,7 +51,7 @@ const Cars = () => {
         car={{
             id: "",
             name: "",
-            model: "",
+            mileage: 0,
             plate: "",
             brand: "",
         }}

@@ -89,10 +89,6 @@ const handleForgotPassword = () => toast("Fale com o suporte!", { type: 'error' 
             </form>
           </div>
           <div className="px-8 py-4 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
-            <label className="flex items-center">
-              <input type="checkbox" className="form-checkbox text-yellow-500" />
-              <span className="ml-2 text-sm text-gray-600">Lembrar-me</span>
-            </label>
             <div>
              <button className="text-sm hover:underline"  onClick={handleForgotPassword}>Esqueceu a senha?</button>
 
