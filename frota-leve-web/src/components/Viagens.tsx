@@ -100,10 +100,10 @@ export function Viagens() {
                 <div className="flex items-center justify-between">
                     <TabsList>
                         <TabsTrigger value="all">Todas Viagens</TabsTrigger>
-                        <TabsTrigger value="inProgress">Em Andamento</TabsTrigger>
-                        <TabsTrigger value="completed">Finalizadas</TabsTrigger>
+                        {/* <TabsTrigger value="inProgress">Em Andamento</TabsTrigger>
+                        <TabsTrigger value="completed">Finalizadas</TabsTrigger> */}
                     </TabsList>
-                    <div className="flex items-center gap-2">
+                    {/* <div className="flex items-center gap-2">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button
@@ -134,7 +134,7 @@ export function Viagens() {
                             <File className="h-3 w-3" />
                             <span className="sr-only sm:not-sr-only">Exportar</span>
                         </Button>
-                    </div>
+                    </div> */}
                 </div>
                 <TabsContent value="all">
                     <Card>
