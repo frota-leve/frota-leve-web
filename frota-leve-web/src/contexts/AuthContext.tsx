@@ -1,6 +1,6 @@
 'use client'
 
-import { signInRequest } from "@/services/auth";
+import { getMe, signInRequest } from "@/services/auth";
 import { createContext, useEffect, useState } from "react";
 import { parseCookies, setCookie } from 'nookies';
 import { useRouter } from "next/navigation";
@@ -36,6 +36,7 @@ export function AuthProvider({ children }: any) {
     const { token } = parseCookies()
 
     if (!token) {
+      getMe().then((respone) => setUser(respone.user))
       router.push('/login')
     }
   }, [])

@@ -43,3 +43,23 @@ export async function signInRequest(data: SignInRequestType) {
     }
   }
 }
+
+export async function getMe() {
+  const response = await axios.get('/api/user/me');
+
+  const {
+    email,
+    name,
+    businessId,
+    businessName,
+  }: LoginResponseType = response.data;
+
+  return {
+    user: {
+      email,
+      name,
+      businessId,
+      businessName,
+    }
+  }
+}
