@@ -7,13 +7,18 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Car,
-  Home,
+  Flag,
+  User,
   Users,
 } from "lucide-react"
+import { AuthContext } from "@/contexts/AuthContext"
+import { useContext } from "react"
 
 
-export default function Component() {
+export default function SideBar() {
   const pathname = usePathname()
+
+  const { user } = useContext(AuthContext)
 
   return (
     <div className="flex h-screen w-64 flex-col fixed left-0 top-0 bg-zinc-950 text-zinc-50">
@@ -28,7 +33,7 @@ export default function Component() {
       <nav className="flex-1 space-y-1 p-4">
         <div className="space-y-1">
           {[
-            { name: 'Home', href: '/', icon: Home },
+            { name: 'Corridas', href: '/', icon: Flag },
             { name: 'Veículos', href: '/cars', icon: Car },
             { name: 'Funcionários', href: '/employees', icon: Users },
 
@@ -59,11 +64,11 @@ export default function Component() {
       <div className="border-t border-zinc-800 p-4">
         <div className="flex items-center gap-3 rounded-lg bg-zinc-900 px-3 py-2">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-yellow-400/10">
-            <Users className="h-4 w-4 text-yellow-400" />
+            <User className="h-4 w-4 text-yellow-400" />
           </div>
           <div className="truncate">
-            <p className="text-sm font-medium">Frota Leve</p>
-            <p className="text-xs text-zinc-400">Administrador</p>
+            <p className="text-sm font-medium">{user?.name}</p>
+            <p className="text-xs text-zinc-400">{user?.businessName}</p>
             </div>
           </div>
         </div>
