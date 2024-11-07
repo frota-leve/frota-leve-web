@@ -1,7 +1,6 @@
 "use client";
 
 import { DataTable } from "./data-table";
-import { employeeColumns } from "./columns";
 import { getAll } from "@/services/employee";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -44,7 +43,7 @@ const Employees = () => {
         </Button>
       </div>
       <div>
-        <DataTable columns={employeeColumns} data={employees} />
+        <DataTable onUpdateTable={getAllEmployees} employees={employees} />
       </div>
       <DialogForm
         open={openFormModal}

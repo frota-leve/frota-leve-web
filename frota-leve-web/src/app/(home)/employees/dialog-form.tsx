@@ -8,21 +8,19 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "@/components/ui/form";
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { User } from "@/components/UserList";
 import { AuthContext } from '@/contexts/AuthContext';
 import { createEmployee } from "@/services/employee";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
-import { Form, useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
+import { Employee } from "@/types/types";
 
 export type EmployeeFormProps = {
-  employee: User;
+  employee: Employee;
   open: boolean;
   onOpenChange: Function;
 };
