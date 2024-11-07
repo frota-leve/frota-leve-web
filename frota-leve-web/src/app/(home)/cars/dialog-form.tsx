@@ -8,17 +8,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Car } from "@/types/types";
-import { AuthContext } from '@/contexts/AuthContext';
 import { createCar } from "@/services/car";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext } from "react";
-import { Form, useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
 
 export type CarFormProps = {

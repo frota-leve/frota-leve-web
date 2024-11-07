@@ -1,7 +1,6 @@
 "use client";
 
 import { DataTable } from "./data-table";
-import { carColumns } from "./columns";
 import { getAll } from "@/services/car";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -44,7 +43,7 @@ const Cars = () => {
         </Button>
       </div>
       <div>
-        <DataTable columns={carColumns} data={cars} />
+        <DataTable onUpdateTable={getAllCars} cars={cars} />
       </div>
       <DialogForm
         open={openFormModal}
