@@ -16,87 +16,106 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button"
+import { Car } from "@/types/types"
+import { AlertTriangleIcon, PenIcon, Trash2Icon} from "lucide-react"
+import { useState } from "react"
+import { deleteCar } from "@/services/car";
+
+
+interface DataTableProps {
+  cars: Car[],
+  onUpdateTable:Function
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-  })
+export function DataTable({
+  cars,
+  onUpdateTable
+}: DataTableProps) {
+
+const[openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+const[carDeleteId, setcarDeleteIdl] = useState<string>('');
+
+function handleOpenDeleteModal(carId: string){
+  setcarDeleteIdl(carId)
+  setOpenDeleteModal(true)
+}
+
+async function handleDelete(){
+  await deleteCar( carDeleteId);
+  setOpenDeleteModal(false)
+  onUpdateTable()
+}
+  
 
   return (
     <div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  )
-                })}
-              </TableRow>
-            ))}
+            <TableRow>
+              <TableHead> Nome</TableHead>
+              <TableHead>Placa</TableHead>
+              <TableHead>Marca</TableHead>
+              <TableHead>KM atual</TableHead>
+              <TableHead>Ações</TableHead>
+            </TableRow>
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
+            {
+              cars.map((car)=>(
+                <TableRow key={(car.id)}>
+                  <TableCell>{car.name} </TableCell>
+                  <TableCell>{car.plate} </TableCell>
+                  <TableCell>{car.brand} </TableCell>
+                  <TableCell>{car.mileage} </TableCell>
+                  <TableCell>
+                  <div className="gap-2 flex">
+                    <Button variant="outline" size="icon" className="bg-[#FFC314] hover:bg-yellow-300">
+                      <PenIcon className="h-4 w-4" color="white"/>
+                    </Button>
+                    <Button onClick={()=>handleOpenDeleteModal(car.id)} variant="outline" size="icon" className="bg-red-500 hover:bg-red-300">
+                      <Trash2Icon className="h-4 w-4" color="white"/>
+                    </Button>
+                 </div>
+                  </TableCell>
                 </TableRow>
               ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
+            }
           </TableBody>
         </Table>
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+        <Dialog open={openDeleteModal}>
+          <DialogContent>
+            <DialogHeader>
+                <DialogTitle>
+                   <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <AlertTriangleIcon style={{ marginRight: '8px', color: 'red' }} />
+                      Atenção
+                    </div>
+              </DialogTitle>
+              </DialogHeader>
+                  <div>
+                    <p>
+                      Deseja realmente Excluir?
+                    </p>
+                  </div>
+              <DialogFooter>
+                   <Button variant={"secondary"}
+                      onClick={()=>setOpenDeleteModal(false)}> Não</Button>
+                  <Button onClick={handleDelete} className="bg-red-500 hover:bg-red-300">Sim</Button>
+              </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   )
