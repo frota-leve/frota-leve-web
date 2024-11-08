@@ -20,22 +20,46 @@ import { Button } from "@/components/ui/button";
 import { Employee } from "@/types/types";
 import { AlertTriangleIcon, PenIcon, Trash2Icon } from "lucide-react";
 import { useContext, useState } from "react";
-import { deleteEmployee } from "@/services/employee";
+import { deleteEmployee, updateEmployee } from "@/services/employee";
 import { AuthContext } from "@/contexts/AuthContext";
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { FormProvider, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface DataTableProps {
   employees: Employee[];
   onUpdateTable: Function;
 }
 
+const employeeUpdateFormSchema = z.object({
+  name: z.string().min(1, {
+    message: 'Nome obrigatório'
+  }).max(50, {
+    message: "Nome muito longo",
+  }),
+})
+
+type EmployeeUpdateFormValues = z.infer<typeof employeeUpdateFormSchema>;
+
 export function DataTable({ employees, onUpdateTable }: DataTableProps) {
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(false);
+
   const [employeeDeletedId, setEmployeeDeletedId] = useState<string>("");
   const { user } = useContext(AuthContext);
+  const [ employeeUpdated, setEmployeeUpdated ] = useState<Employee | null>(null);
 
   function handleOpenDeleteModal(carId: string) {
     setEmployeeDeletedId(carId);
     setOpenDeleteModal(true);
+  }
+
+  function handleOpenUpdateModal(employeeUpdated: Employee) {
+    setEmployeeUpdated(employeeUpdated);
+    employeeUpdateForm.setValue('name', employeeUpdated.name)
+    setOpenUpdateModal(true);
   }
 
   async function handleDelete() {
@@ -43,6 +67,18 @@ export function DataTable({ employees, onUpdateTable }: DataTableProps) {
     setOpenDeleteModal(false);
     onUpdateTable();
   }
+
+  const employeeUpdateForm = useForm<EmployeeUpdateFormValues>({
+    resolver: zodResolver(employeeUpdateFormSchema),
+  })
+
+  const onSubmit = async (data: EmployeeUpdateFormValues) => {
+    if (!employeeUpdated?.id) return
+    await updateEmployee(employeeUpdated.id, data.name);
+    setOpenUpdateModal(false);
+    onUpdateTable();
+  }
+
   return (
     <div>
       <div className="rounded-md border">
@@ -67,6 +103,7 @@ export function DataTable({ employees, onUpdateTable }: DataTableProps) {
                       variant="outline"
                       size="icon"
                       className="bg-[#FFC314] hover:bg-yellow-300"
+                      onClick={() => handleOpenUpdateModal(employee)}
                     >
                       <PenIcon className="h-4 w-4" color="white" />
                     </Button>
@@ -114,6 +151,39 @@ export function DataTable({ employees, onUpdateTable }: DataTableProps) {
                 Sim
               </Button>
             </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        <Dialog open={openUpdateModal} onOpenChange={() => setOpenUpdateModal((value) => !value)}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>
+                <div>
+                  Editar Funcionário
+                </div>
+              </DialogTitle>
+            </DialogHeader>
+            <div>
+              <FormProvider {...employeeUpdateForm}>
+                <form onSubmit={employeeUpdateForm.handleSubmit(onSubmit)} className="space-y-8">
+                  <FormField
+                    control={employeeUpdateForm.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nome</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Digite o nome..." {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <DialogFooter>
+                    <Button type="submit">Salvar</Button>
+                  </DialogFooter>
+                </form>
+              </FormProvider>
+            </div>
           </DialogContent>
         </Dialog>
       </div>
