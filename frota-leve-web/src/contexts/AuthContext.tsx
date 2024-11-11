@@ -35,8 +35,9 @@ export function AuthProvider({ children }: any) {
   useEffect(() => {
     const { token } = parseCookies()
 
-    if (!token) {
+    if (token) {
       getMe().then((respone) => setUser(respone.user))
+    } else {
       router.push('/login')
     }
   }, [])

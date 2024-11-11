@@ -22,34 +22,50 @@ import { AlertTriangleIcon, PenIcon, Trash2Icon } from "lucide-react";
 import { useContext, useState } from "react";
 import { deleteEmployee, updateEmployee } from "@/services/employee";
 import { AuthContext } from "@/contexts/AuthContext";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Skeleton } from "@/components/ui/skeleton";
+import { LoadingTable } from "@/components/LoadingTable";
 
 interface DataTableProps {
   employees: Employee[];
   onUpdateTable: Function;
+  loading: boolean;
 }
 
 const employeeUpdateFormSchema = z.object({
-  name: z.string().min(1, {
-    message: 'Nome obrigatório'
-  }).max(50, {
-    message: "Nome muito longo",
-  }),
-})
+  name: z
+    .string()
+    .min(1, {
+      message: "Nome obrigatório",
+    })
+    .max(50, {
+      message: "Nome muito longo",
+    }),
+});
 
 type EmployeeUpdateFormValues = z.infer<typeof employeeUpdateFormSchema>;
 
-export function DataTable({ employees, onUpdateTable }: DataTableProps) {
+export function DataTable({
+  employees,
+  onUpdateTable,
+  loading,
+}: DataTableProps) {
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(false);
 
   const [employeeDeletedId, setEmployeeDeletedId] = useState<string>("");
   const { user } = useContext(AuthContext);
-  const [ employeeUpdated, setEmployeeUpdated ] = useState<Employee | null>(null);
+  const [employeeUpdated, setEmployeeUpdated] = useState<Employee | null>(null);
 
   function handleOpenDeleteModal(carId: string) {
     setEmployeeDeletedId(carId);
@@ -58,7 +74,7 @@ export function DataTable({ employees, onUpdateTable }: DataTableProps) {
 
   function handleOpenUpdateModal(employeeUpdated: Employee) {
     setEmployeeUpdated(employeeUpdated);
-    employeeUpdateForm.setValue('name', employeeUpdated.name)
+    employeeUpdateForm.setValue("name", employeeUpdated.name);
     setOpenUpdateModal(true);
   }
 
@@ -70,14 +86,14 @@ export function DataTable({ employees, onUpdateTable }: DataTableProps) {
 
   const employeeUpdateForm = useForm<EmployeeUpdateFormValues>({
     resolver: zodResolver(employeeUpdateFormSchema),
-  })
+  });
 
   const onSubmit = async (data: EmployeeUpdateFormValues) => {
-    if (!employeeUpdated?.id) return
+    if (!employeeUpdated?.id) return;
     await updateEmployee(employeeUpdated.id, data.name);
     setOpenUpdateModal(false);
     onUpdateTable();
-  }
+  };
 
   return (
     <div>
@@ -92,33 +108,35 @@ export function DataTable({ employees, onUpdateTable }: DataTableProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {employees.map((employee) => (
-              <TableRow key={employee.id}>
-                <TableCell>{employee.name} </TableCell>
-                <TableCell>{employee.email} </TableCell>
-                <TableCell>{employee.document} </TableCell>
-                <TableCell>
-                  <div className="gap-2 flex">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="bg-[#FFC314] hover:bg-yellow-300"
-                      onClick={() => handleOpenUpdateModal(employee)}
-                    >
-                      <PenIcon className="h-4 w-4" color="white" />
-                    </Button>
-                    <Button
-                      onClick={() => handleOpenDeleteModal(employee.id)}
-                      variant="outline"
-                      size="icon"
-                      className="bg-red-500 hover:bg-red-300"
-                    >
-                      <Trash2Icon className="h-4 w-4" color="white" />
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
+            {loading
+              ? <LoadingTable length={employees.length}/>
+              : employees.map((employee) => (
+                  <TableRow key={employee.id}>
+                    <TableCell>{employee.name} </TableCell>
+                    <TableCell>{employee.email} </TableCell>
+                    <TableCell>{employee.document} </TableCell>
+                    <TableCell>
+                      <div className="gap-2 flex">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="bg-[#FFC314] hover:bg-yellow-300"
+                          onClick={() => handleOpenUpdateModal(employee)}
+                        >
+                          <PenIcon className="h-4 w-4" color="white" />
+                        </Button>
+                        <Button
+                          onClick={() => handleOpenDeleteModal(employee.id)}
+                          variant="outline"
+                          size="icon"
+                          className="bg-red-500 hover:bg-red-300"
+                        >
+                          <Trash2Icon className="h-4 w-4" color="white" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
         <Dialog open={openDeleteModal}>
@@ -153,18 +171,22 @@ export function DataTable({ employees, onUpdateTable }: DataTableProps) {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <Dialog open={openUpdateModal} onOpenChange={() => setOpenUpdateModal((value) => !value)}>
+        <Dialog
+          open={openUpdateModal}
+          onOpenChange={() => setOpenUpdateModal((value) => !value)}
+        >
           <DialogContent>
             <DialogHeader>
               <DialogTitle>
-                <div>
-                  Editar Funcionário
-                </div>
+                <div>Editar Funcionário</div>
               </DialogTitle>
             </DialogHeader>
             <div>
               <FormProvider {...employeeUpdateForm}>
-                <form onSubmit={employeeUpdateForm.handleSubmit(onSubmit)} className="space-y-8">
+                <form
+                  onSubmit={employeeUpdateForm.handleSubmit(onSubmit)}
+                  className="space-y-8"
+                >
                   <FormField
                     control={employeeUpdateForm.control}
                     name="name"

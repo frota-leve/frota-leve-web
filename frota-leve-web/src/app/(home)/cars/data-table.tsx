@@ -1,14 +1,6 @@
 "use client";
 
 import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-  getPaginationRowModel,
-} from "@tanstack/react-table";
-
-import {
   Table,
   TableBody,
   TableCell,
@@ -42,10 +34,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoadingTable } from "@/components/LoadingTable";
 
 interface DataTableProps {
   cars: Car[];
   onUpdateTable: Function;
+  loading: boolean
 }
 
 const carUptadeFormSchema = z.object({
@@ -63,7 +57,7 @@ const carUptadeFormSchema = z.object({
 
 type CarUpdateFormValues = z.infer<typeof carUptadeFormSchema>;
 
-export function DataTable({ cars, onUpdateTable }: DataTableProps) {
+export function DataTable({ cars, onUpdateTable, loading }: DataTableProps) {
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [carDeleteId, setcarDeleteIdl] = useState<string>("");
 
@@ -115,7 +109,9 @@ export function DataTable({ cars, onUpdateTable }: DataTableProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {cars.map((car) => (
+            {loading
+              ? <LoadingTable length={cars.length}/>
+              : cars.map((car) => (
               <TableRow key={car.id}>
                 <TableCell>{car.name} </TableCell>
                 <TableCell>{car.plate} </TableCell>

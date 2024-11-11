@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from "@/lib/axios-config";
 
 type SignInRequestType = {
   email: string;
@@ -17,7 +17,7 @@ type LoginResponseType = {
 }
 
 export async function signInRequest(data: SignInRequestType) {
-  const response = await axios.post('/api/auth', data);
+  const response = await api.post('/api/auth', data);
 
   const {
     token,
@@ -45,7 +45,7 @@ export async function signInRequest(data: SignInRequestType) {
 }
 
 export async function getMe() {
-  const response = await axios.get('/api/user/me');
+  const response = await api.get('/api/user/me');
 
   const {
     email,

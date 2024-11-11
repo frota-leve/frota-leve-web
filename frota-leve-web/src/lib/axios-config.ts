@@ -1,6 +1,5 @@
 import axios from "axios";
 import { parseCookies } from 'nookies';
-import { useRouter } from 'next/navigation';
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,

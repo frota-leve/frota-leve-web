@@ -11,18 +11,13 @@ import { Car } from "@/types/types";
 const Cars = () => {
   const [cars, setCars] = useState<Car[]>([]);
   const [openFormModal, setOpenFormModal] = useState<boolean>(false);
-
-  const carEmpty: Car = {
-    id: "",
-    name: "",
-    mileage: 0,
-    plate: "",
-    brand: "",
-  };
+  const [loading, setLoading] = useState<boolean>(false)
 
   async function getAllCars() {
+    setLoading(true)
     const data = await getAll();
     setCars(data);
+    setLoading(false)
   }
 
   function handleOnOpenModalChange(isOpen: boolean) {
@@ -43,7 +38,7 @@ const Cars = () => {
         </Button>
       </div>
       <div>
-        <DataTable onUpdateTable={getAllCars} cars={cars} />
+        <DataTable loading={loading} onUpdateTable={getAllCars} cars={cars} />
       </div>
       <DialogForm
         open={openFormModal}
