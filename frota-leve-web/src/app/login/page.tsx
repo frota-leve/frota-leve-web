@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useContext, useState } from 'react'
 import { AuthContext } from '@/contexts/AuthContext'
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock, Loader2 } from 'lucide-react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -15,23 +15,12 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState<boolean>(false);
 
   async function handleSignIn() {
+    setLoading(true)
     await signIn({ email, password: senha })
-  }
-
-  const savedLogin = async () => {
-    const response = await fetch('/api/auth', {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        password: senha
-      })
-    })
-    const responseJson = await response.json()
-    console.log(responseJson.token)
-    router.push('/')
+    setLoading(false)
   }
 
 const handleForgotPassword = () => toast("Fale com o suporte!", { type: 'error' });
@@ -83,7 +72,14 @@ const handleForgotPassword = () => toast("Fale com o suporte!", { type: 'error' 
                   type="submit"
                   className="w-full bg-yellow-400 text-black rounded-md py-2 px-4 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:-translate-y-1"
                 >
-                  Entrar
+                  {loading ? <>
+                    <div className='flex gap-2 items-center justify-center'>
+                      <Loader2 className="animate-spin" />
+                      Entrando...
+                    </div>
+                  </> : <>
+                    Entrar
+                  </>}
                 </button>
               </div>
             </form>

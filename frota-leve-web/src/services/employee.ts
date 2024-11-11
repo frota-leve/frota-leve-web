@@ -1,6 +1,7 @@
 import { Employee } from "@/types/types";
 import api from "@/lib/axios-config";
 
+
 export type CreateEmployeeType = {
   email: string;
   document: string;
@@ -20,9 +21,10 @@ export async function deleteEmployee(businessId: string, employeeId: string): Pr
 
 }
 
-export async function getAll(): Promise<Employee[]> {
-  const { data } = await api.get('/api/employees');
-  return data.content
+export async function getAll(page: number, size: number) {
+  return await api.get('/api/employees', {
+    params: { page: page - 1, size }
+  });
 }
 
 export async function updateEmployee(employeeId: string, name: string) {
